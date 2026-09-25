@@ -1,0 +1,93 @@
+export const AERO_CLEAR_SOURCES = [
+  {
+    name: 'Open-Meteo Weather Forecast API',
+    organization: 'Open-Meteo',
+    url: 'https://open-meteo.com/en/docs',
+    variables: 'Temperature, relative humidity, cloud cover, visibility, wind speed, weather code',
+    units: '°C, %, km/h, m / km, WMO code',
+    resolution: 'Model-dependent; API documents the selected model/grid',
+    time: 'Current + hourly forecast',
+    update: 'Continuously updated forecast service',
+    processing: 'Direct API response; Aero Clear normalizes units and computes a project-defined score',
+    status: 'real',
+    limitations: 'Forecast/model output is not an in-situ astronomical measurement.'
+  },
+  {
+    name: 'Open-Meteo Geocoding API',
+    organization: 'Open-Meteo',
+    url: 'https://open-meteo.com/en/docs/geocoding-api',
+    variables: 'Place name, latitude, longitude, country, administrative region, elevation',
+    units: 'Coordinates in WGS84 degrees; elevation in meters when supplied',
+    resolution: 'Location database dependent',
+    time: 'Current geocoding records',
+    update: 'Service dependent',
+    processing: 'Direct search response; Aero Clear uses returned coordinates to request weather',
+    status: 'real',
+    limitations: 'A geocoded place is not evidence of local light-pollution conditions.'
+  },
+  {
+    name: 'Light Pollution Map',
+    organization: 'Jurij Stare / lightpollutionmap.info',
+    url: 'https://www.lightpollutionmap.info/',
+    variables: 'VIIRS / Sky Brightness map layers and related astronomy map information',
+    units: 'Source-dependent; VIIRS radiance is nW·cm⁻²·sr⁻¹ and sky brightness is presented separately',
+    resolution: 'Source-product dependent',
+    time: 'Map layers include annual VIIRS composites; current site documents 2025 and earlier layers',
+    update: 'Layer-dependent',
+    processing: 'Aero Clear embeds the source map; it does not scrape or fabricate pixel values',
+    status: 'real',
+    limitations: 'The external map is a separate application; values displayed there are not automatically ingested into Aero Clear calculations.'
+  },
+  {
+    name: 'NASA VIIRS Black Marble',
+    organization: 'NASA Earth Science / VIIRS Black Marble',
+    url: 'https://blackmarble.gsfc.nasa.gov/',
+    variables: 'Nighttime-light radiance products',
+    units: 'Product-dependent; VIIRS radiance commonly reported in nW·cm⁻²·sr⁻¹',
+    resolution: 'Product-dependent',
+    time: 'Annual/monthly/daily product families depending on dataset',
+    update: 'Product-dependent',
+    processing: 'Upstream scientific source documented by Light Pollution Map; not directly queried by the Aero Clear frontend',
+    status: 'upstream',
+    limitations: 'Aero Clear does not claim direct NASA telemetry ingestion unless a NASA endpoint is explicitly connected.'
+  },
+  {
+    name: 'NASA Earthdata Worldview',
+    organization: 'NASA Earthdata',
+    url: 'https://worldview.earthdata.nasa.gov/',
+    variables: 'Earth-observation visualization layers',
+    units: 'Layer-dependent',
+    resolution: 'Layer-dependent',
+    time: 'Layer-dependent',
+    update: 'Layer-dependent',
+    processing: 'Methodological / verification reference only in the current prototype',
+    status: 'reference',
+    limitations: 'Not directly queried by Aero Clear calculations.'
+  },
+  {
+    name: 'Globe at Night',
+    organization: 'Globe at Night',
+    url: 'https://globeatnight.org/',
+    variables: 'Citizen-science night-sky observations',
+    units: 'Protocol-dependent',
+    resolution: 'Observation-site dependent',
+    time: 'Observation-date dependent',
+    update: 'Campaign / submission dependent',
+    processing: 'Methodological reference; no Globe at Night feed is currently queried by the app',
+    status: 'reference',
+    limitations: 'Not a live input to the current Aero Clear score.'
+  },
+  {
+    name: 'DarkSky International — Lighting Principles',
+    organization: 'DarkSky International',
+    url: 'https://darksky.org/resources/guides-and-how-tos/lighting-principles/',
+    variables: 'Responsible outdoor-lighting principles',
+    units: 'Not a measurement dataset',
+    resolution: 'Guidance',
+    time: 'Current guidance page',
+    update: 'Organization-maintained',
+    processing: 'Used as methodological guidance for responsible-lighting explanations',
+    status: 'reference',
+    limitations: 'Guidance is not an observation-quality measurement.'
+  }
+] as const;
